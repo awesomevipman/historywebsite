@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Home Page</title>
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+  <div class="filter-bar">
+    <input type="text" id="filter-input" placeholder="Search..." oninput="applyFilter()">
+    <select id="filter-category" onchange="applyFilter()">
+      <option value="all">All</option>
+      <option value="category1">Public Service</option>
+      <option value="category2">Category 2</option>
+      <option value="category3">Category 3</option>
+    </select>
+  </div>
+
+  <div id="content">
+    <p data-category="category1"><a href="nva/nva.html">National People's Army - Nationale Volksarmee</a></p>
+    <p data-category="category1"><a href="vopo/vopo.html">People's Police - Volkspolizei</a></p>
+    <p data-category="category3">Content 3 - Category 3</p>
+    <p data-category="category1">Content 4 - Category 1</p>
+    <p data-category="category2">Content 5 - Category 2</p>
+    <p data-category="category3">Content 6 - Category 3</p>
+  </div>
+
+  <script>
+    function applyFilter() {
+      var input = document.getElementById('filter-input').value.toLowerCase();
+      var category = document.getElementById('filter-category').value;
+      var content = document.getElementById('content').getElementsByTagName('p');
+
+      for (var i = 0; i < content.length; i++) {
+        var text = content[i].textContent.toLowerCase();
+        var dataCategory = content[i].getAttribute('data-category');
+        var categoryMatch = (category === 'all' || dataCategory === category);
+        var inputMatch = (text.indexOf(input) !== -1);
+
+        if (categoryMatch && inputMatch) {
+          content[i].style.display = 'block';
+        } else {
+          content[i].style.display = 'none';
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
