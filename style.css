@@ -40,3 +40,6 @@ body {
     text-align: center;
   }
   
+  .filter-bar-message {
+    display: none;
+}

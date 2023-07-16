@@ -6,6 +6,8 @@
 
   <link rel="stylesheet" href="style.css">
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 
 <body>
@@ -19,6 +21,9 @@
     </select>
   </div>
 
+  <span class="filter-bar-message"><b>No results found - please refine your search!</b></span>
+
+
   <div id="content">
     <p data-category="category1"><a href="nva/nva.html">National People's Army - Nationale Volksarmee</a></p>
     <p data-category="category1"><a href="vopo/vopo.html">People's Police - Volkspolizei</a></p>
@@ -28,23 +33,36 @@
     <p data-category="category3">Content 6 - Category 3</p>
   </div>
 
+
   <script>
     function applyFilter() {
-      var input = document.getElementById('filter-input').value.toLowerCase();
-      var category = document.getElementById('filter-category').value;
-      var content = document.getElementById('content').getElementsByTagName('p');
+      let input = document.getElementById('filter-input').value.toLowerCase();
+      let category = document.getElementById('filter-category').value;
+      let content = document.getElementById('content').getElementsByTagName('p');
+      let contentSection = document.getElementById('content');
+      let noResults = document.getElementsByClassName('filter-bar-message')[0];
+      let matchFound = false;
 
-      for (var i = 0; i < content.length; i++) {
-        var text = content[i].textContent.toLowerCase();
-        var dataCategory = content[i].getAttribute('data-category');
-        var categoryMatch = (category === 'all' || dataCategory === category);
-        var inputMatch = (text.indexOf(input) !== -1);
+      for (let i = 0; i < content.length; i++) {
+        let text = content[i].textContent.toLowerCase();
+        let dataCategory = content[i].getAttribute('data-category');
+        let categoryMatch = (category === 'all' || dataCategory === category);
+        let inputMatch = (text.indexOf(input) !== -1);
 
         if (categoryMatch && inputMatch) {
           content[i].style.display = 'block';
+          matchFound = true;
         } else {
           content[i].style.display = 'none';
         }
+      }
+
+      if (matchFound) {
+        noResults.style.display = 'none';
+        contentSection.style.display = 'block';
+      } else {
+        noResults.style.display = 'block';
+        contentSection.style.display = 'none';
       }
     }
   </script>
